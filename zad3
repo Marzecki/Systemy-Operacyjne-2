@@ -1,0 +1,31 @@
+#! /bin/bash
+
+#skrypt jest wywoływany ze sciezki ~/SO 
+#skrypt wywolywany jest przy pomocy komendy "./zad3 ~/SO/test3"
+
+if [ $# -eq 1 ]
+then 
+
+    rm -r $1/*
+
+    mkdir $1/test_wewnatrz
+
+    touch $1/a.jpg
+    touch $1/a_test.jpg
+    touch $1/b.png
+    touch $1/b_test.png
+    touch $1/test_wewnatrz/c.jpg
+    touch $1/test_wewnatrz/c_test.jpg
+    touch $1/test_wewnatrz/d.png
+    touch $1/test_wewnatrz/d_test.png
+
+    printf "Pliki zawierające w nazwie 'test': \n"
+    find $1 -type f -name "*test*" | sort | head -n 3
+
+    printf "Pliki .jpg lub .png: \n"
+    find $1 -type f \( -name "*.jpg" -o -name "*.png" \) -print | tr "/" "|"
+
+    printf "Usuwanie plików: \n"
+    find $1 -maxdepth 2 -type f ! -mmin +1 -print -exec rm {} \;
+
+fi

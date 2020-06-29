@@ -1,0 +1,15 @@
+#! /bin/bash
+
+#ps aux
+
+#zad a) wyświetlić wszystkie procesy które zużywają więcej niż 0.1% MEM
+ps aux | awk '{if($4>0.1) print "Uzytkownik " $1 " ma uruchomiony proces o PID " $2 " - CPU=" $3 ", MEM=" $4}'
+printf "\n"
+
+#zad b) wyświetlić czas działania w minutach wszystkich procesów które działają dłużej niż 5 minut
+ps aux | awk '{split($10, a, ":"); if(a[1]*60+a[2]>5) print "Proces o PID " $2 " trwa: " a[1]*60+a[2]}' 
+printf "\n"
+
+#zad c) wyświetlić sumę zużycia CPU i MEM wszystkich użytkowników
+ps aux | awk '{sumCPU += $3; sumMEM += $4} END {print "Suma CPU: " sumCPU ", Suma MEM: " sumMEM}'
+

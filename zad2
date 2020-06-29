@@ -1,0 +1,33 @@
+#! /bin/bash
+
+#skrypt jest wywoływany ze sciezki ~/SO w ktorej znajduje sie juz katalog ~/SO/test
+#skrypt wywolywany jest przy pomocy komendy "./zad2 ~/SO/test"
+
+if [ ! -d $1 ]
+then 
+    echo "Nie ma takiego katalogu"
+    exit 1
+fi
+
+if [ $# -eq 1 ]
+then
+    #usuniecie wczesniejszej zawartosci
+    rm -r $1/*
+    #utworzenie folderow
+    mkdir $1/A $1/E
+    mkdir $1/A/B $1/A/C
+    mkdir $1/A/C/D 
+    #stworzenie i wypelnienie plikow tekstowych
+    echo "Test1" >> $1/A/plik1.txt
+    echo "Test2" >> $1/A/B/plik2.txt
+    echo "Test3" >> $1/A/C/D/plik3.txt
+    echo "Test4" >> $1/E/plik4.txt
+    #utworzenie odpowiednich dowiazan symbolicznych (sciezka bezwzgledna)
+    ln -s ~/SO/test/A/plik1.txt ~/SO/test/E/link_bez_plik1
+    ln -s ~/SO/test/E/plik4.txt ~/SO/test/E/link_bez_plik4
+    #utworzenie odpowiednich dowiazan symbolicznych (sciezka wzgledna)
+    ln -s ../plik1.txt ./test/A/B/link_plik1
+    ln -s ../A/B/plik2.txt ./test/E/link_plik2
+    ln -s ../A/C/D/plik3.txt ./test/E/link_plik3
+    ln -s ../../../E/plik4.txt ./test/A/C/D/link_plik4
+fi

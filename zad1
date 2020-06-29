@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ ! -d $1 ]
+then 
+	echo Nie ma takiego folderu!
+	exit 1
+fi
+
+#rm $1/*.old
+
+for file in $1/*.old
+do
+	if [ -f $file -a -w $file ] 
+	then 
+		rm $file
+	fi
+done
+
+for file in $1/*
+do
+	if [ -f $file -a -w $file ] 
+	then 
+		mv "$file" "$file.old"
+	fi
+done
+
+
+
+
+
